@@ -1,34 +1,54 @@
-import { CannonType, drawEllipse } from "./utility.js";
+import { CannonType } from "./utility.js";
 
-export default function createCannon(gameCanvas, x, y, size, type) {
-    this.x = x;
-    this.y = y;
+export default function createCannon(type) {
+    this.type = type;
 
     this.draw = function() {
-        var ctx = gameCanvas.context;
+        var color = "";
 
         switch(type) {
             case CannonType.CANNON_BLOCK_GREEN:
-                ctx.fillStyle = "green";
+                color = "btn-success";
                 break;
             case CannonType.CANNON_BLOCK_BLUE:
-                ctx.fillStyle = "blue";
+                color = "btn-primary";
                 break;
             case CannonType.Fire_BLOCK:
-                ctx.fillStyle = "red";
+                color = "btn-danger";
+                break;
+            case CannonType.CANNON_BLOCK_ENEMY:
+                color = "btn-dark";
+                return '<button type="button" class="btn ' + color + ' enemy_cannon"></button>';
+            default:
                 break;
         }
+ 
+        var buttonClass = "btn " + color + " cannon";
 
-        ctx.fillRect(this.x, this.y, size, size);
+        return '<button type="button" class="' + buttonClass + '"></button>';
     }
 }
 
-export function createCannonMouth(gameCanvas, x, y) {
-    this.x = x;
-    this.y = y;
+export function createCannonMouth(type) {
+    this.type = type;
 
     this.draw = function() {
-        var ctx = gameCanvas.context;
-        drawEllipse(ctx, x, y, 15, 40);
+        var cannonMouthClass = "cannon_mouth cannon_mouth";
+
+        switch(type) {
+            case CannonType.CANNON_BLOCK_GREEN:
+                cannonMouthClass += "_green";
+                break;
+            case CannonType.CANNON_BLOCK_BLUE:
+                cannonMouthClass += "_blue";
+                break;
+            case CannonType.CANNON_BLOCK_ENEMY:
+                cannonMouthClass += "_black";
+                return  '<div class="' + cannonMouthClass + '"/>'
+            default:
+                break;
+        }
+        
+        return  '<div class="' + cannonMouthClass + '"/>'
     }
 }

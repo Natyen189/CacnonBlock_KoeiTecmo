@@ -18,39 +18,53 @@ var gameCanvas = {
 
 let Cannons = new Array();
 
-window.addEventListener('load', 
-  function() { 
-    startGame();
-  }, false);
-
-function startGame() {
-    gameCanvas.start();
-    createPlayerPlayground(7,5);
-}
+$(document).ready(function(){  
+    createPlayerPlayground(5,7);
+    createEnemyPlayground(4,7);
+});
 
 function createPlayerPlayground(width, height) {
-    var xStartPos = 50;
-    var yStartPos = 200;
+    for(let x = 0; x < height; x++) {
+        var newDiv = document.createElement("div");
+        newDiv.className = "row_" + x + " d-flex align-items-center";
+        $('.player_side').append(newDiv);
+    }
 
-    var xPos = xStartPos;
-    var yPos = yStartPos;
-    var Offset = 60;
-
-    for (let x = 0; x < width; x++) {
-        for(let y = 0; y < height; y++) {
-            var Cannon = new createCannon(gameCanvas, xPos, yPos, 50, getRandomCannonType());
-            Cannon.draw();
+    for (let x = 0; x < height; x++) {
+        for(let y = 0; y < width; y++) {
+            var Cannon = new createCannon(getRandomCannonType());
             Cannons.push(Cannon);
 
-            if(y == height - 1) {
-                var CannonMouth = new createCannonMouth(gameCanvas, xPos + 55, yPos + 5);
-                CannonMouth.draw();
+            var currentDiv = ".row_" + x;
+            $(currentDiv).append(Cannon.draw());
+
+            if(y == width - 1) {
+                var CannonMouth = new createCannonMouth(getRandomCannonType());
+                $(currentDiv).append(CannonMouth.draw());
+            }
+        }
+    }
+}
+
+function createEnemyPlayground(width, height) {
+    for(let x = 0; x < height; x++) {
+        var newDiv = document.createElement("div");
+        newDiv.className = "enemy_row_" + x + " d-flex align-items-center";
+        $('.enemy_side').append(newDiv);
+    }
+
+    for (let x = 0; x < height; x++) {
+        for(let y = 0; y < width; y++) {
+            var currentDiv = ".enemy_row_" + x;
+            
+            if(y == 0) {
+                var EnemyCannonMouth = new createCannonMouth(CannonType.CANNON_BLOCK_ENEMY);
+                $(currentDiv).append(EnemyCannonMouth.draw());
             }
 
-            xPos += Offset;
+            var EnemyCannon = new createCannon(CannonType.CANNON_BLOCK_ENEMY);
+            $(currentDiv).append(EnemyCannon.draw());
         }
-        yPos += Offset;
-        xPos = xStartPos;
     }
 }
 
