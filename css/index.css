@@ -1,10 +1,10 @@
-.cannon {
+.block {
     width: 50px;
     height: 50px;
     margin: 2px;
 }
 
-.enemy_cannon {
+.enemy_block {
     width: 30px;
     height: 50px;
     margin-top: 2px;

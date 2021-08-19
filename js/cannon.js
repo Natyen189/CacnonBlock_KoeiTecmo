@@ -1,6 +1,6 @@
 import { CannonType } from "./utility.js";
 
-export default function createCannon(type) {
+export default function createBlock(id, type) {
     this.type = type;
 
     this.draw = function() {
@@ -18,14 +18,14 @@ export default function createCannon(type) {
                 break;
             case CannonType.CANNON_BLOCK_ENEMY:
                 color = "btn-dark";
-                return '<button type="button" class="btn ' + color + ' enemy_cannon"></button>';
+                return '<button type="button"' + 'id="enemy_block_' + id + '"' + 'class="btn ' + color + ' enemy_block"></button>';
             default:
                 break;
         }
  
-        var buttonClass = "btn " + color + " cannon";
+        var buttonClass = "btn " + color + " block";
 
-        return '<button type="button" class="' + buttonClass + '"></button>';
+        return '<button type="button"' + 'id="block_' + id + '"' + 'class="' + buttonClass + '"></button>';
     }
 }
 

@@ -1,26 +1,29 @@
-import createCannon from "./cannon.js";
+import createBlock from "./cannon.js";
 import { createCannonMouth } from "./cannon.js";
-import randomNumber from "./utility.js";
+import { getRandomCannonType } from "./utility.js";
 import { CannonType } from "./utility.js";
+import swapBlock from "./server.js";
+import { updateEnemyCannon } from "./server.js";
 
-var canvasWidth = 1280;
-var canvasHeight = 720;
-
-var gameCanvas = {
-    canvas: document.createElement("canvas"),
-    start: function() {
-        this.canvas.width = canvasWidth;
-        this.canvas.height = canvasHeight;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    }
-}
-
-let Cannons = new Array();
+var currentSelectedBlock = null;
 
 $(document).ready(function(){  
     createPlayerPlayground(5,7);
     createEnemyPlayground(4,7);
+
+    $('.block').click(function() {
+        console.log("Selected block: " + $(this).attr("id"));
+
+        if(currentSelectedBlock == null) {
+            currentSelectedBlock = this;
+        }
+        else {
+            swapBlock(currentSelectedBlock, this);
+            currentSelectedBlock = null;
+
+            updateEnemyCannon();
+        }
+    });
 });
 
 function createPlayerPlayground(width, height) {
@@ -32,11 +35,11 @@ function createPlayerPlayground(width, height) {
 
     for (let x = 0; x < height; x++) {
         for(let y = 0; y < width; y++) {
-            var Cannon = new createCannon(getRandomCannonType());
-            Cannons.push(Cannon);
+            var BlockID = "(" + x + "," + y + ")";
+            var Block = new createBlock(BlockID, getRandomCannonType());
 
             var currentDiv = ".row_" + x;
-            $(currentDiv).append(Cannon.draw());
+            $(currentDiv).append(Block.draw());
 
             if(y == width - 1) {
                 var CannonMouth = new createCannonMouth(getRandomCannonType());
@@ -56,22 +59,15 @@ function createEnemyPlayground(width, height) {
     for (let x = 0; x < height; x++) {
         for(let y = 0; y < width; y++) {
             var currentDiv = ".enemy_row_" + x;
+            var BlockID = "(" + x + "," + y + ")";
             
             if(y == 0) {
                 var EnemyCannonMouth = new createCannonMouth(CannonType.CANNON_BLOCK_ENEMY);
                 $(currentDiv).append(EnemyCannonMouth.draw());
             }
 
-            var EnemyCannon = new createCannon(CannonType.CANNON_BLOCK_ENEMY);
-            $(currentDiv).append(EnemyCannon.draw());
+            var EnemyCannonBlock = new createBlock(BlockID, CannonType.CANNON_BLOCK_ENEMY);
+            $(currentDiv).append(EnemyCannonBlock.draw());
         }
     }
-}
-
-function getRandomCannonType() {
-    var random = Math.floor(randomNumber(0, 1));
-
-    if(random == 0) return CannonType.CANNON_BLOCK_GREEN;
-
-    return CannonType.CANNON_BLOCK_BLUE;
 }
