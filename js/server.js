@@ -39,3 +39,51 @@ export function updateEnemyCannon() {
 		});
 	}
 }
+
+export function fireCannon() {
+
+}
+
+export function calculateDamage() {
+	
+}
+
+export function checkBlockMovable(block) {
+	if(block.classList.contains("btn-success")) {
+		return checkNextBlock(block.nextSibling, "btn-success");
+	}
+	else if(block.classList.contains("btn-primary")) {
+		return checkNextBlock(block.nextSibling, "btn-primary");
+	}
+}
+
+function checkNextBlock(block, type) {
+	if(!block.classList.contains(type)) {
+		if(block.classList.contains("cannon_mouth"))
+		{
+			switch(type)
+			{
+				case "btn-success":
+					if(block.classList.contains("cannon_mouth_green")) {
+						return false;
+					}
+					// console.log("Hello");
+					return true;
+				case "btn-primary":
+					if(block.classList.contains("cannon_mouth_blue")) {
+						return false;
+					}
+					// console.log("Hello");
+					return true;
+				default:
+					return false;
+			}
+		}
+
+		return true;
+	}
+	else {
+		// console.log("Hello");
+		checkNextBlock(block.nextSibling, type);
+	}
+}

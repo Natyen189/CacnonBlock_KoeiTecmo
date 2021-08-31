@@ -2,8 +2,8 @@ import createBlock from "./cannon.js";
 import { createCannonMouth } from "./cannon.js";
 import { getRandomCannonType } from "./utility.js";
 import { CannonType } from "./utility.js";
-import swapBlock from "./server.js";
-import { updateEnemyCannon } from "./server.js";
+import swapBlock, { fireCannon } from "./server.js";
+import { updateEnemyCannon, checkBlockMovable } from "./server.js";
 
 var currentSelectedBlock = null;
 
@@ -18,12 +18,21 @@ $(document).ready(function(){
             currentSelectedBlock = this;
         }
         else {
-            swapBlock(currentSelectedBlock, this);
-            currentSelectedBlock = null;
+            if(checkBlockMovable(currentSelectedBlock) && checkBlockMovable(this)) {
+                swapBlock(currentSelectedBlock, this);
+                currentSelectedBlock = null;
 
-            updateEnemyCannon();
+                updateEnemyCannon();
+            }
+
+            currentSelectedBlock = null;
         }
     });
+
+    $('.fire_button').click(function() {
+        fireCannon();
+        updateEnemyCannon();
+    })
 });
 
 function createPlayerPlayground(width, height) {
