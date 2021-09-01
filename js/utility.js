@@ -10,6 +10,10 @@ export function getRandomCannonType() {
     return CannonType.CANNON_BLOCK_BLUE;
 }
 
+export function jq( myid ) {
+    return "#" + myid.replace( / ( : | \ . | \ [ | \ ] | , | = | @ ) /g, "\\$1" );
+}
+
 export const CannonType = {
     CANNON_BLOCK_GREEN: 1,
     CANNON_BLOCK_BLUE: 2,

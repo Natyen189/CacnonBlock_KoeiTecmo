@@ -1,3 +1,5 @@
+import { jq } from "./utility.js";
+
 export default function swapBlock(firstBlock, secondBlock) {
     const parentA = firstBlock.parentNode;
     const siblingA = firstBlock.nextSibling === secondBlock ? firstBlock : firstBlock.nextSibling;
@@ -29,14 +31,14 @@ export default function swapBlock(firstBlock, secondBlock) {
 }
 
 export function updateEnemyCannon() {
-	for(let x = 0; x < 6; x++) {
-		var element = "input[id*='" + "enemy_block_(" + x + "']";
-
-		$(element).each(function (i, el) {
-			//It'll be an array of elements
-			this.classList.add('btn-dark');
-			this.classList.add('btn-danger');
-		});
+	for(let x = 0; x <= 6; x++) {
+		for(let y = 3; y >= 0; y--) {
+			var elementID = "#enemy_block_\\(" + x + "\\," + y + "\\)";
+			if($(elementID).css("background-color") == "rgb(52, 58, 64)") {
+				$(elementID).css("background-color", "red");
+				break;
+			}
+		}
 	}
 }
 
@@ -50,9 +52,11 @@ export function calculateDamage() {
 
 export function checkBlockMovable(block) {
 	if(block.classList.contains("btn-success")) {
+		console.log(block.nextSibling);
 		return checkNextBlock(block.nextSibling, "btn-success");
 	}
 	else if(block.classList.contains("btn-primary")) {
+		console.log(block.nextSibling);
 		return checkNextBlock(block.nextSibling, "btn-primary");
 	}
 }
