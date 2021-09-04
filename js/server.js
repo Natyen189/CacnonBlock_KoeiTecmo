@@ -43,20 +43,54 @@ export function updateEnemyCannon() {
 }
 
 export function fireCannon() {
+	$(".cannon_mouth").each(function() {
+		var cannonType = "";
+		if(this.classList.contains("cannon_mouth_green")) {
+			cannonType = "btn-success";
+		}
+		else if(this.classList.contains("cannon_mouth_blue")) {
+			cannonType = "btn-primary";
+		}
 
+		var cannonLength = getCannonLength(cannonType);
+		if(cannonLength != 0) {
+			//fire
+			//calculateDamage
+			//resetCannonBlocks
+		}
+	});
+}
+
+function getCannonLength(cannonMouthType, id) {
+	var sum = 0;
+
+	for(let x = 4; x >= 0; x--) {
+		var block = "#block_\\(" + id + "\\," + x + "\\)";
+		// console.log($(block));
+		// if($(block).classList.contains(cannonMouthType)) {
+		sum++;
+		// }
+		// else break;
+	}
+
+	return sum;
 }
 
 export function calculateDamage() {
 	
 }
 
+function resetCannonBlocks() {
+
+}
+
 export function checkBlockMovable(block) {
 	if(block.classList.contains("btn-success")) {
-		console.log(block.nextSibling);
+		//console.log(block.nextSibling);
 		return checkNextBlock(block.nextSibling, "btn-success");
 	}
 	else if(block.classList.contains("btn-primary")) {
-		console.log(block.nextSibling);
+		//console.log(block.nextSibling);
 		return checkNextBlock(block.nextSibling, "btn-primary");
 	}
 }
@@ -80,7 +114,7 @@ function checkNextBlock(block, type) {
 					// console.log("Hello");
 					return true;
 				default:
-					return false;
+					return true;
 			}
 		}
 

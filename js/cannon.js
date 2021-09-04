@@ -29,7 +29,7 @@ export default function createBlock(id, type) {
     }
 }
 
-export function createCannonMouth(type) {
+export function createCannonMouth(type, id) {
     this.type = type;
 
     this.draw = function() {
@@ -49,6 +49,6 @@ export function createCannonMouth(type) {
                 break;
         }
         
-        return  '<div class="' + cannonMouthClass + '"/>'
+        return  '<div class="' + cannonMouthClass + '" id="' + id + '"/>'
     }
 }

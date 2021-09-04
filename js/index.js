@@ -20,9 +20,8 @@ $(document).ready(function(){
         else {
             if(checkBlockMovable(currentSelectedBlock) && checkBlockMovable(this)) {
                 swapBlock(currentSelectedBlock, this);
-                currentSelectedBlock = null;
-
                 updateEnemyCannon();
+                currentSelectedBlock = null;
             }
 
             currentSelectedBlock = null;
@@ -51,7 +50,8 @@ function createPlayerPlayground(width, height) {
             $(currentDiv).append(Block.draw());
 
             if(y == width - 1) {
-                var CannonMouth = new createCannonMouth(getRandomCannonType());
+                var MouthID = "cannon_mouth_" + x;
+                var CannonMouth = new createCannonMouth(getRandomCannonType(), MouthID);
                 $(currentDiv).append(CannonMouth.draw());
             }
         }
