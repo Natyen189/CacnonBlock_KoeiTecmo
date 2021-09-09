@@ -1,6 +1,6 @@
 import createBlock from "./cannon.js";
 import { createCannonMouth } from "./cannon.js";
-import { getRandomCannonType } from "./utility.js";
+import { getRandomCannonType, PlaygroundHeight, PlaygroundWidth, EnemyPlaygroundWidth } from "./utility.js";
 import { CannonType } from "./utility.js";
 import swapBlock, { fireCannon } from "./server.js";
 import { updateEnemyCannon, checkBlockMovable } from "./server.js";
@@ -8,8 +8,8 @@ import { updateEnemyCannon, checkBlockMovable } from "./server.js";
 var currentSelectedBlock = null;
 
 $(document).ready(function(){  
-    createPlayerPlayground(5,7);
-    createEnemyPlayground(4,7);
+    createPlayerPlayground(PlaygroundWidth, PlaygroundHeight);
+    createEnemyPlayground(EnemyPlaygroundWidth, PlaygroundHeight);
 
     $('.block').click(function() {
         console.log("Selected block: " + $(this).attr("id"));

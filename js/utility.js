@@ -20,3 +20,7 @@ export const CannonType = {
     CANNON_BLOCK_ENEMY : 3,
     Fire_BLOCK: 4,
 }
+
+export const PlaygroundHeight = 7;
+export const PlaygroundWidth = 5;
+export const EnemyPlaygroundWidth = 4;
