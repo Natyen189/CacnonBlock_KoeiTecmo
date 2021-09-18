@@ -1,5 +1,6 @@
 import { jq } from "./utility.js";
 import { PlaygroundHeight, PlaygroundWidth, EnemyPlaygroundWidth } from "./utility.js";
+import randomNumber from "./utility.js";
 
 export default function swapBlock(firstBlock, secondBlock) {
 	const parentA = firstBlock.parentNode;
@@ -36,6 +37,9 @@ export function updateEnemyCannon() {
 		for (let y = EnemyPlaygroundWidth; y >= 0; y--) {
 			var elementID = "#enemy_block_\\(" + x + "\\," + y + "\\)";
 			if ($(elementID).css("background-color") == "rgb(52, 58, 64)") {
+				if(y == 0) {
+					fireEnemyCannon(x);
+				}
 				$(elementID).css("background-color", "red");
 				break;
 			}
@@ -50,10 +54,19 @@ function resetEnemyCannon(row) {
 	}
 }
 
-function restPlayerCannon(row) {
+function resetPlayerCannon(row) {
 	for (let y = PlaygroundWidth - 1; y >= 0; y--) {
 		
 	}
+}
+
+function fireEnemyCannon(row) {
+	var randomBlockIndex = randomNumber(0, PlaygroundWidth - 1);
+	var block = "#block_\\(" + row + "\\," + randomBlockIndex + "\\)";
+	$(block).css("background-color", "red");
+	$(block).css("pointer-events", "none");
+
+	console.log("FIRE");
 }
 
 
